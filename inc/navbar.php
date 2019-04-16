@@ -15,9 +15,9 @@
                 <ul class="nav navbar-nav">
                     <?php
                         $query = 'SELECT * FROM categories';
-                        $categories = mysqli_query($connection, $query);
+                        $navbarCategories = mysqli_query($connection, $query);
                         
-                        while ($row = mysqli_fetch_assoc($categories)){
+                        while ($row = mysqli_fetch_assoc($navbarCategories)){
                             $cat_title = $row['cat_title'];
                             echo "<li>
                                     <a href='#'>{$cat_title}</a>
@@ -25,9 +25,10 @@
                         }
                     ?>
 
-                    <!-- <li>
-                        <a href="#">About</a>
+                    <li>
+                        <a href="admin">Admin</a>
                     </li>
+                    <!-- 
                     <li>
                         <a href="#">Services</a>
                     </li>

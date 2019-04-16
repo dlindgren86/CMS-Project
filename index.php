@@ -48,7 +48,7 @@ include('inc/header.php');
                     <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                     <hr>
-             <?php }
+                 <?php }
                 ?>
 
 
