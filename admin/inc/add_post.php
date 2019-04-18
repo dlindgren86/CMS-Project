@@ -9,11 +9,10 @@
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = 4;
         move_uploaded_file($post_img_tmp, "../img/$post_img");
 
-        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
-        $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', now(),'{$post_img}','{$post_content}','{$post_tags}',{$post_comment_count}, '{$post_status}')";
+        $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_status) ";
+        $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', now(),'{$post_img}','{$post_content}','{$post_tags}','{$post_status}')";
         $addPost = mysqli_query($connection, $query);
         query_error($addPost);
         header('Location: ./posts.php');

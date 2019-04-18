@@ -19,7 +19,7 @@ include('inc/header.php');
                         <small>Secondary Text</small>
                     </h1>
                 <?php
-                    $query = 'SELECT * FROM posts ORDER BY post_id DESC';
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC";
                     $postQuery = mysqli_query($connection, $query);
                     
                     while($row = mysqli_fetch_assoc($postQuery)){
@@ -29,10 +29,7 @@ include('inc/header.php');
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
                         $post_img = $row['post_img'];
-
                         ?>
-
-                   
 
                     <!-- First Blog Post -->
                     <h2>
@@ -49,7 +46,8 @@ include('inc/header.php');
                     <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                     <hr>
-                 <?php }
+                 <?php 
+                }
                 ?>
 
 

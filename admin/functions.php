@@ -58,7 +58,7 @@ function delete_category(){
 
 function display_posts(){
     global $connection;
-    $query = "SELECT * FROM posts";
+    $query = "SELECT * FROM posts ORDER BY post_id DESC";
     $getPosts = mysqli_query($connection, $query);
     while($row = mysqli_fetch_assoc($getPosts)){
         $id = $row['post_id'];
@@ -98,7 +98,7 @@ function display_posts(){
 
 function display_comments(){
     global $connection;
-    $query = "SELECT * FROM comments";
+    $query = "SELECT * FROM comments ORDER BY comment_id DESC";
     $getComments = mysqli_query($connection, $query);
     while($row = mysqli_fetch_assoc($getComments)){
         $comment_id = $row['comment_id'];
@@ -123,12 +123,12 @@ function display_comments(){
             $post_title = $row['post_title'];
             $comment_post_id = $row['post_id'];
 
-        echo "<td>$post_title</td>";
+        echo "<td><a href='../post.php?id=$comment_post_id'>$post_title</a></td>";
         }
         echo "<td>$comment_date</td>";
-        echo "<td>Approve</td>";
-        echo "<td>Unapprove</td>";
-        echo "<td>Delete</td>";
+        echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+        echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
+        echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
 
         echo "</tr>";
     }
