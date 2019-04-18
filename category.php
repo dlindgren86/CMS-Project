@@ -19,7 +19,13 @@ include('inc/header.php');
                         <small>Secondary Text</small>
                     </h1>
                 <?php
-                    $query = 'SELECT * FROM posts ORDER BY post_id DESC';
+
+                if(isset($_GET['id'])){
+                    $cat_id = $_GET['id'];
+                } else {
+                    $cat_id = 0;
+                }
+                    $query = "SELECT * FROM posts WHERE post_category_id = $cat_id";
                     $postQuery = mysqli_query($connection, $query);
                     
                     while($row = mysqli_fetch_assoc($postQuery)){

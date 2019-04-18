@@ -1,7 +1,7 @@
 <?php
     if(isset($_POST['submit'])){
         $post_title = $_POST['post_title'];
-        $post_category = $_POST['post_category'];
+        $post_category_id = $_POST['post_category'];
         $post_author = $_POST['post_author'];
         $post_status = $_POST['post_status'];
         $post_img = $_FILES['post_img']['name'];
@@ -13,9 +13,10 @@
         move_uploaded_file($post_img_tmp, "../img/$post_img");
 
         $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_img, post_content, post_tags, post_comment_count, post_status) ";
-        $query .= "VALUES({$post_category},'{$post_title}','{$post_author}', now(),'{$post_img}','{$post_content}','{$post_tags}',{$post_comment_count}, '{$post_status}')";
+        $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', now(),'{$post_img}','{$post_content}','{$post_tags}',{$post_comment_count}, '{$post_status}')";
         $addPost = mysqli_query($connection, $query);
         query_error($addPost);
+        header('Location: ./posts.php');
     }
 ?>
 
@@ -25,8 +26,21 @@
         <input type="text" class="form-control" name="post_title">
     </div>
     <div class="form-group">
-        <label for="title">Category Id</label>
-        <input type="text" class="form-control" name="post_category">
+        <label for="title">Category</label> <br>
+        <select name="post_category" id="post_category">
+        <?php
+        $query = "SELECT * FROM categories";
+        $editCategory = mysqli_query($connection, $query);
+        query_error($editCategory);
+
+        while ($row = mysqli_fetch_assoc($editCategory)){
+            $cat_title = $row['cat_title'];
+            $cat_id = $row['cat_id'];
+
+        echo "<option value='$cat_id'>$cat_title</option>";
+        }
+        ?>
+        </select>
     </div>
     <div class="form-group">
         <label for="title">Author</label>

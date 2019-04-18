@@ -21,16 +21,16 @@
                         }
                     
                         switch($source){
-                            case 'add_post';
-                            include('inc/add_post.php');
+                            case 'add_comment';
+                            include('inc/add_comment.php');
                             break;
 
-                            case 'edit_post';
-                            include('inc/edit_post.php');
+                            case 'edit_comment';
+                            include('inc/edit_comment.php');
                             break;
 
                             default:
-                            include('inc/view_posts.php');
+                            include('inc/view_comments.php');
 
                             break;
                         }

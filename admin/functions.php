@@ -64,7 +64,7 @@ function display_posts(){
         $id = $row['post_id'];
         $author = $row['post_author'];
         $title = $row['post_title'];
-        $category = $row['post_category_id'];
+        $category_id = $row['post_category_id'];
         $status = $row['post_status'];
         $img = $row['post_img'];
         $tags = $row['post_tags'];
@@ -74,7 +74,17 @@ function display_posts(){
         echo "<td>$id</td>";
         echo "<td>$author</td>";
         echo "<td>$title</td>";
-        echo "<td>$category</td>";
+
+        $query = "SELECT * FROM categories WHERE cat_id = $category_id";
+        $editCategory = mysqli_query($connection, $query);
+        query_error($editCategory);
+
+        while ($row = mysqli_fetch_assoc($editCategory)){
+            $cat_title = $row['cat_title'];
+            $cat_id = $row['cat_id'];
+
+        echo "<td>$cat_title</td>";
+        }
         echo "<td>$status</td>";
         echo "<td><img width='100px' src='../img/$img'></td>";
         echo "<td>$tags</td>";
@@ -86,4 +96,41 @@ function display_posts(){
     }
 }
 
+function display_comments(){
+    global $connection;
+    $query = "SELECT * FROM comments";
+    $getComments = mysqli_query($connection, $query);
+    while($row = mysqli_fetch_assoc($getComments)){
+        $comment_id = $row['comment_id'];
+        $comment_post_id = $row['comment_post_id'];
+        $comment_author = $row['comment_author'];
+        $comment_email = $row['comment_email'];
+        $comment_content = $row['comment_content'];
+        $comment_status = $row['comment_status'];
+        $comment_date = $row['comment_date'];
+        echo "<tr>";
+        echo "<td>$comment_id</td>";
+        echo "<td>$comment_author</td>";
+        echo "<td>$comment_content</td>";
+        echo "<td>$comment_email</td>";
+        echo "<td>$comment_status</td>";
+
+        $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
+        $showComment = mysqli_query($connection, $query);
+        query_error($showComment);
+
+        while ($row = mysqli_fetch_assoc($showComment)){
+            $post_title = $row['post_title'];
+            $comment_post_id = $row['post_id'];
+
+        echo "<td>$post_title</td>";
+        }
+        echo "<td>$comment_date</td>";
+        echo "<td>Approve</td>";
+        echo "<td>Unapprove</td>";
+        echo "<td>Delete</td>";
+
+        echo "</tr>";
+    }
+}
 ?>

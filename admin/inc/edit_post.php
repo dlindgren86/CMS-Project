@@ -51,6 +51,7 @@
         $query .= "WHERE post_id = $post_id";
         $updatePost = mysqli_query($connection, $query);
         query_error($updatePost);
+        header('Location: posts.php');
     }
 
 ?>
@@ -61,6 +62,7 @@
         <input type="text" class="form-control" name="post_title" value="<?php echo $post_title; ?>">
     </div>
     <div class="form-group">
+        <label for="title">Category</label> <br>
         <select name="post_category" id="post_category">
         <?php
         $query = "SELECT * FROM categories";
