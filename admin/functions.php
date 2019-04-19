@@ -73,17 +73,16 @@ function display_posts(){
         echo "<tr>";
         echo "<td>$id</td>";
         echo "<td>$author</td>";
-        echo "<td>$title</td>";
-
+        echo "<td><a href='../post.php?id=$id'>$title</a></td>";
+        
         $query = "SELECT * FROM categories WHERE cat_id = $category_id";
-        $editCategory = mysqli_query($connection, $query);
-        query_error($editCategory);
+        $showCategory = mysqli_query($connection, $query);
+        query_error($showCategory);
 
-        while ($row = mysqli_fetch_assoc($editCategory)){
+        while ($row = mysqli_fetch_assoc($showCategory)){
             $cat_title = $row['cat_title'];
             $cat_id = $row['cat_id'];
-
-        echo "<td>$cat_title</td>";
+            echo "<td><a href='../category.php?id=$cat_id'>$cat_title</a></td>";
         }
         echo "<td>$status</td>";
         echo "<td><img width='100px' src='../img/$img'></td>";
@@ -130,6 +129,36 @@ function display_comments(){
         echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
         echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
 
+        echo "</tr>";
+    }
+}
+
+
+
+function display_users(){
+    global $connection;
+    $query = "SELECT * FROM users";
+    $getUsers = mysqli_query($connection, $query);
+    while($row = mysqli_fetch_assoc($getUsers)){
+        $user_id = $row['user_id'];
+        $username = $row['username'];
+        $password = $row['password'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+        $email = $row['email'];
+        $user_img = $row['user_img'];
+        $user_role = $row['user_role'];
+        echo "<tr>";
+        echo "<td>$user_id</td>";
+        echo "<td>$username</td>";
+        echo "<td><img width='50px' src='../img/$user_img'></td>";
+        echo "<td>$first_name</td>";
+        echo "<td>$last_name</td>";
+        echo "<td>$email</td>";
+        echo "<td>$user_role</td>";
+
+        echo "<td><a href ='users.php?source=edit_user&id=$user_id'>Edit</a></td>";
+        echo "<td><a href ='users.php?delete=$user_id'>Delete</a></td>";
         echo "</tr>";
     }
 }
