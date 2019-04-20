@@ -29,6 +29,9 @@ include('inc/header.php');
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
                         $post_img = $row['post_img'];
+                        $post_status = $row['post_status'];
+
+                        if($post_status == 'Published'){
                         ?>
 
                     <!-- First Blog Post -->
@@ -47,6 +50,7 @@ include('inc/header.php');
 
                     <hr>
                  <?php 
+                    }
                 }
                 ?>
 
