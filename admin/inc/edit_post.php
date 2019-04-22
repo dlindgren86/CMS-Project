@@ -1,6 +1,6 @@
 <?php
-    if(isset($_GET['id'])){
-        $post_id = $_GET['id'];
+    if(isset($_GET['p_id'])){
+        $post_id = $_GET['p_id'];
         $query = "SELECT * FROM posts WHERE post_id = $post_id";
         $edit_post = mysqli_query($connection, $query);
         query_error($edit_post);
@@ -83,8 +83,17 @@
         <input type="text" class="form-control" name="post_author" value="<?php echo $post_author; ?>">
     </div>
     <div class="form-group">
-        <label for="title">Status</label>
-        <input type="text" class="form-control" name="post_status" value="<?php echo $post_status; ?>">
+        <label for="title">Status</label> <br>
+        <select name="post_status" id="post_status">
+        <option value="<?php echo $post_status; ?>"><?php echo $post_status; ?></option>
+        <?php 
+        if($post_status == 'Published'){
+            echo "<option value='Draft'>Draft</option>";
+        } else {
+            echo "<option value='Published'>Publish</option>";
+        }
+        ?>
+        </select>
     </div>
     <div class="form-group">
         <div class="form-group">
@@ -98,7 +107,7 @@
     </div>
     <div class="form-group">
         <label for="title">Content</label>
-        <textarea type="text" rows="10" class="form-control" name="post_content"><?php echo $post_content; ?></textarea>
+        <textarea type="text" rows="10" class="form-control" name="post_content" id="body"><?php echo $post_content; ?></textarea>
     </div>
     <input type="submit" class="btn btn-primary" name="submit" value="Update">
 

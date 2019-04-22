@@ -35,18 +35,23 @@
                 $user_img = $row['user_img'];
             }
         }
-        if(empty($password)){
-            $query = "SELECT * FROM users WHERE user_id = $user_id ";
-            $get_password = mysqli_query($connection, $query);
-            query_error($get_password);
-
-            while($row = mysqli_fetch_array($get_password)){
-                $password = $row['password'];
+    
+        // Password encrypt
+        $query = "SELECT rand_salt FROM users";
+        $select_salt = mysqli_query($connection, $query);
+            if(!$select_salt){
+                die('Query Failed ' . mysqli_error($connection));
             }
-        }
+
+            $row = mysqli_fetch_array($select_salt);
+            $salt = $row['rand_salt'];
+            $hashed_password = crypt($password, $salt);
+
+
+        //Send update to DB
         $query = "UPDATE users SET ";
         $query .= "username = '$username', ";
-        $query .= "password = '$password', ";
+        if(!empty($password)){$query .= "password = '$hashed_password', ";}
         $query .= "first_name = '$first_name', ";
         $query .= "last_name = '$last_name', ";
         $query .= "email = '$email', ";
@@ -72,7 +77,7 @@
     <div class="form-group">
         <label for="title">User Role</label> <br>
         <select name="user_role" id="user_role">
-        <option value="Subscriber"><?php echo $user_role; ?></option>
+        <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
         <?php 
         if($user_role == 'admin'){
             echo "<option value='Subscriber'>Subscriber</option>";

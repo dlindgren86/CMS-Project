@@ -15,7 +15,9 @@
         $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}', now(),'{$post_img}','{$post_content}','{$post_tags}','{$post_status}')";
         $addPost = mysqli_query($connection, $query);
         query_error($addPost);
-        header('Location: ./posts.php');
+
+        $p_id = mysqli_insert_id($connection);
+        header("Location: ../post.php?p_id=$p_id");
     }
 ?>
 
@@ -46,8 +48,12 @@
         <input type="text" class="form-control" name="post_author">
     </div>
     <div class="form-group">
-        <label for="title">Status</label>
-        <input type="text" class="form-control" name="post_status">
+        <label for="title">Status</label> <br>
+            <select name="post_status" id="">
+                <option value="Draft">Select Option</option>
+                <option value="Draft">Draft</option>
+                <option value="Published">Publish</option>
+            </select>
     </div>
     <div class="form-group">
         <label for="post_img">Image</label>
@@ -59,7 +65,7 @@
     </div>
     <div class="form-group">
         <label for="title">Content</label>
-        <textarea type="text" rows="10" class="form-control" name="post_content"></textarea>
+        <textarea type="text" rows="10" class="form-control" name="post_content" id="body"></textarea>
     </div>
     <input type="submit" class="btn btn-primary" name="submit" value="Publish">
 

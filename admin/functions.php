@@ -70,10 +70,12 @@ function display_posts(){
         $tags = $row['post_tags'];
         $comments = $row['post_comment_count'];
         $date = $row['post_date'];
+        $post_views = $row['post_views'];
         echo "<tr>";
+        echo "<td><input type='checkbox' class='checkboxes' name='checkboxArray[]' value='$id'></input></td>";
         echo "<td>$id</td>";
         echo "<td>$author</td>";
-        echo "<td><a href='../post.php?id=$id'>$title</a></td>";
+        echo "<td><a href='../post.php?p_id=$id'>$title</a></td>";
         
         $query = "SELECT * FROM categories WHERE cat_id = $category_id";
         $showCategory = mysqli_query($connection, $query);
@@ -88,9 +90,10 @@ function display_posts(){
         echo "<td><img width='100px' src='../img/$img'></td>";
         echo "<td>$tags</td>";
         echo "<td>$comments</td>";
+        echo "<td>$post_views</td>";
         echo "<td>$date</td>";
-        echo "<td><a href='posts.php?source=edit_post&id=$id'>Edit</a></td>";
-        echo "<td><a href='posts.php?delete=$id'>Delete</a></td>";
+        echo "<td><a href='posts.php?source=edit_post&p_id=$id'>Edit</a></td>";
+        echo "<td><a onClick=\"javascript: return confirm('Please confirm DELETE this post?');\"href='posts.php?delete=$id'>Delete</a></td>";
         echo "</tr>";
     }
 }
@@ -122,7 +125,7 @@ function display_comments(){
             $post_title = $row['post_title'];
             $comment_post_id = $row['post_id'];
 
-        echo "<td><a href='../post.php?id=$comment_post_id'>$post_title</a></td>";
+        echo "<td><a href='../post.php?p_id=$comment_post_id'>$post_title</a></td>";
         }
         echo "<td>$comment_date</td>";
         echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";

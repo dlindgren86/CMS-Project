@@ -20,12 +20,15 @@ include('inc/header.php');
                         <small>Secondary Text</small>
                     </h1>
                 <?php
-                    if(isset($_GET['id'])){
-                        $post_id = $_GET['id'];
-                    } else {
-                        $post_id = 0;
+                    if(isset($_GET['p_id'])){
+                        $post_id = $_GET['p_id'];
 
-                    }
+                    $view_query = "UPDATE posts SET post_views = post_views + 1 WHERE post_id = $post_id";
+                    $viewQuery = mysqli_query($connection, $view_query);
+                        if(!$viewQuery){
+                            die('Query Failed ' . mysqli_error($connection));
+                        }
+                    
                     $query = "SELECT * FROM posts WHERE post_id = $post_id";
                     $postQuery = mysqli_query($connection, $query);
                     
@@ -52,23 +55,30 @@ include('inc/header.php');
                     <img class="img-responsive" src="img/<?php echo $post_img; ?>" alt="">
                     <hr>
                     <p><?php echo $post_content; ?></p>
-                    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                     <hr>
                  <?php }
+                 } else {
+                     header('Location: index.php');
+                 }
                 ?>
 
                <!-- Blog Comments -->
                <?php
                if(isset($_POST['post_comment'])){
-                    $post_id = $_GET['id'];
+                    $post_id = $_GET['p_id'];
                     $comment_author = $_POST['comment_author'];
                     $comment_email = $_POST['comment_email'];
                     $comment_content = $_POST['comment_content'];
+
+                    if(empty($comment_author) && empty($comment_email) && empty($comment_content)){
+                        echo "<script>alert('You need to till out all fields')</script>";
+
+                    } else {
                     
 
                     $query = "INSERT INTO comments(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                    $query .= "VALUES ($post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now())";
+                    $query .= "VALUES ($post_id, '$comment_author', '$comment_email', '$comment_content', 'Unapproved', now())";
                     $post_comment = mysqli_query($connection, $query);
 
                     if(!$post_comment){
@@ -81,6 +91,7 @@ include('inc/header.php');
                         die('Query Failed' .mysqli_error($connection));
                     }
                 }
+            }
                 ?>
                 <!-- Comments Form -->
                 <div class="well">
@@ -110,7 +121,7 @@ include('inc/header.php');
  
 
                     <?php
-                        $post_id = $_GET['id'];
+                        $post_id = $_GET['p_id'];
                         $query = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
                         $query .= "AND comment_status = 'Approved'";
                         //$query .= "ORDER BY comment_id DESC";

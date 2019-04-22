@@ -15,22 +15,33 @@
                     <!-- /.input-group -->
                 </div>
 
-                <!--Login form -->
-                <div class="well">
-                    <h4>Login</h4>
-                    <form action="inc/login.php" method="post">
-                    <div class="form-group">
-                        <input name="username" type="text" class="form-control" placeholder="Username">
-                    </div>
-                    <div class="input-group">
-                        <input name="password" type="password" class="form-control" placeholder="Password">
-                        <span class="input-group-btn">
-                        <button class="btn btn-primary" name="login" type="submit">Log in</button>
-                        </span>                    
-                    </div>
-                    </form>
-                    <!-- /.input-group -->
-                </div>
+                <?php
+                    if(isset($_SESSION['username'])){
+                        ?>
+                        <div class="well">
+                            <h4>You are logged in as:</h4> <?php echo $_SESSION['username']; ?>
+                            <a href="admin/profile.php">View Profile</a>
+                        </div>
+                    <?php } else { ?>
+
+                        <!--Login form -->
+                        <div class="well">
+                            <h4>Login</h4>
+                            <form action="inc/login.php" method="post">
+                            <div class="form-group">
+                                <input name="username" type="text" class="form-control" placeholder="Username">
+                            </div>
+                            <div class="input-group">
+                                <input name="password" type="password" class="form-control" placeholder="Password">
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary" name="login" type="submit">Log in</button>
+                                </span>                    
+                            </div>
+                            </form>
+                            <!-- /.input-group -->
+                        </div>
+                   <?php } ?>
+                    
                 <!-- Blog Categories Well -->
                 <div class="well">
                 <?php

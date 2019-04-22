@@ -31,7 +31,6 @@
 
                             default:
                             include('inc/view_posts.php');
-
                             break;
                         }
                        

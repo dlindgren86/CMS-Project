@@ -25,18 +25,30 @@
                                 </li>";
                         }
                     ?>
-
-                    <li>
-                        <a href="admin">Admin</a>
-                    </li>
+                     </ul>
+                     <ul class="nav navbar-right navbar-nav">
+                     <?php
+                     if(!isset($_SESSION['user_role'])){
+                    echo "<li><a href='registration.php'>Register</a></li>";
+                     }
+                     ?>
+                    <?php
+                    if(isset($_SESSION['user_role'])){
+                        if(isset($_GET['p_id'])){
+                            $p_id = $_GET['p_id'];
+                            echo "<li><a href='admin/posts.php?source=edit_post&p_id=$p_id'>Edit Post</a></li>";
+                        }
+                        echo "<li><a href='admin'>Admin</a></li>";
+                    }
+              
+                    ?>
+                    </ul>
+                    
                     <!-- 
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
                     <li>
                         <a href="#">Contact</a>
                     </li> -->
-                </ul>
+               
             </div>
             <!-- /.navbar-collapse -->
         </div>

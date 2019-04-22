@@ -19,27 +19,7 @@ include('inc/header.php');
                         <small>Secondary Text</small>
                     </h1>
                 <?php
-                $per_page = 5;
-                if(isset($_GET['page'])){
-                    $page = $_GET['page'];
-                } else {
-                    $page = '';
-                }
-                
-                if($page == '' OR $page == 1){
-                    $page_1 = 0;
-                } else {
-                    $page_1 = ($page * $per_page) - $per_page;
-                }
-
-                //Find out total amount of posts
-                    $post_count = "SELECT * FROM posts";
-                    $post_countQuery = mysqli_query($connection, $post_count);
-                    $count = mysqli_num_rows($post_countQuery);
-                    $count = ceil($count / $per_page); //How many pages in the paginator
-
-
-                    $query = "SELECT * FROM posts  ORDER BY post_id DESC LIMIT $page_1, $per_page";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_id DESC";
                     $postQuery = mysqli_query($connection, $query);
                     
                     while($row = mysqli_fetch_assoc($postQuery)){
@@ -82,21 +62,6 @@ include('inc/header.php');
 
         </div>
         <!-- /.row -->
-                <ul class="pager">
-                <?php
-                    for($i = 1; $i <= $count; $i++){
 
-                        if($i == $page){
-
-                            echo "<li><a class='active' href='index.php?page=$i'>$i</a></li>";
-
-                        } else {
-
-                            echo "<li><a href='index.php?page=$i'>$i</a></li>";
-                        }
-                    }
-                ?>
-
-                </ul>
         <hr>
 <?php include('inc/footer.php'); ?>

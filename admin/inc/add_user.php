@@ -14,7 +14,7 @@
         $query .= "VALUES('{$username}','{$password}','{$first_name}','{$last_name}','{$email}','{$user_img}','{$user_role}')";
         $addUser = mysqli_query($connection, $query);
         query_error($addUser);
-        header('Location: ./users.php');
+        echo "User Added: " . "<a href='users.php'>View Users.</a>";
     }
 ?>
 

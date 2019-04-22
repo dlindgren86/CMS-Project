@@ -8,6 +8,8 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>User Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -24,21 +26,4 @@
         query_error($delete);
         header('Location: ./users.php');
     }
-
-/*     if(isset($_GET['unapprove'])){
-        $comment_id = $_GET['unapprove'];
-        $query = "UPDATE comments SET comment_status = 'Unapproved' WHERE comment_id = '$comment_id'";
-        $unapprove = mysqli_query($connection, $query);
-        query_error($unapprove);
-        header('Location: ./comments.php');
-    }
-
-    if(isset($_GET['approve'])){
-        $comment_id = $_GET['approve'];
-        $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = '$comment_id'";
-        $approve = mysqli_query($connection, $query);
-        query_error($approve);
-        header('Location: ./comments.php');
-    }
-     */
 ?>
